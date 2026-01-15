@@ -16,30 +16,6 @@
       "destination": "/api/create-sale.js"
     },
     {
-      "source": "/public/:path*",
-      "destination": "/public/:path*"
-    },
-    {
-      "source": "/payments",
-      "destination": "/pages/payments.html"
-    },
-    {
-      "source": "/payments.html",
-      "destination": "/pages/payments.html"
-    },
-    {
-      "source": "/atendimento",
-      "destination": "/pages/atendimento.html"
-    },
-    {
-      "source": "/atendimento.html",
-      "destination": "/pages/atendimento.html"
-    },
-    {
-      "source": "/",
-      "destination": "/pages/atendimento.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/server.js"
     }

@@ -110,17 +110,25 @@ function handleRequest(req, res) {
   if (cleanPath.startsWith('/')) {
     cleanPath = cleanPath.substring(1);
   }
-  const normalizedPath = path.join(__dirname, cleanPath);
 
-  // Debug: log do caminho
-  console.log(`Tentando acessar: ${urlPath} -> ${filePath} -> ${cleanPath} -> ${normalizedPath} (__dirname: ${__dirname})`);
+  // Tentar diferentes caminhos base (para funcionar na Vercel e localmente)
+  let normalizedPath = path.join(__dirname, cleanPath);
 
-  // Verificar se o arquivo existe antes de tentar ler
+  // Se não existir, tentar com process.cwd()
   if (!fs.existsSync(normalizedPath)) {
-    console.error(`❌ Arquivo não existe: ${normalizedPath}`);
+    const altPath = path.join(process.cwd(), cleanPath);
+    if (fs.existsSync(altPath)) {
+      normalizedPath = altPath;
+      console.log(`✅ Arquivo encontrado em: ${normalizedPath} (usando cwd)`);
+    } else {
+      console.error(`❌ Arquivo não existe em: ${path.join(__dirname, cleanPath)} nem em: ${altPath}`);
+    }
   } else {
     console.log(`✅ Arquivo existe: ${normalizedPath}`);
   }
+
+  // Debug: log do caminho
+  console.log(`Tentando acessar: ${urlPath} -> ${filePath} -> ${cleanPath} -> ${normalizedPath} (__dirname: ${__dirname}, cwd: ${process.cwd()})`);
 
   fs.readFile(normalizedPath, (error, content) => {
     if (error) {
