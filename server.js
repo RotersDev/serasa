@@ -48,10 +48,12 @@ function handleRequest(req, res) {
 
   let filePath;
 
-  // Ignorar rotas da API (tratadas pelas serverless functions)
+  // Rotas da API são tratadas pelas serverless functions na Vercel
+  // Se chegou aqui, não é uma rota de API válida
   if (urlPath.startsWith('/api/')) {
-    res.writeHead(404, { 'Content-Type': 'text/html' });
-    res.end('<h1>404 - Rota da API não encontrada</h1>', 'utf-8');
+    // Deixar passar para não bloquear (pode ser uma rota de API que não existe)
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, message: 'Rota da API não encontrada' }), 'utf-8');
     return;
   }
 
@@ -110,10 +112,10 @@ function handleRequest(req, res) {
   if (cleanPath.startsWith('/')) {
     cleanPath = cleanPath.substring(1);
   }
-  
+
   // Tentar diferentes caminhos base (para funcionar na Vercel e localmente)
   let normalizedPath = path.join(__dirname, cleanPath);
-  
+
   // Se não existir, tentar com process.cwd()
   if (!fs.existsSync(normalizedPath)) {
     const altPath = path.join(process.cwd(), cleanPath);
@@ -140,7 +142,7 @@ function handleRequest(req, res) {
   } else {
     console.log(`✅ Arquivo existe: ${normalizedPath}`);
   }
-  
+
   // Debug: log do caminho
   console.log(`Tentando acessar: ${urlPath} -> ${filePath} -> ${cleanPath} -> ${normalizedPath} (__dirname: ${__dirname}, cwd: ${process.cwd()})`);
 

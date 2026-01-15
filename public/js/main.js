@@ -36,6 +36,8 @@ if (document.readyState === 'loading') {
   var baseUrl = 'https://type.atendimentoexpresso1.shop/central2';
   var params = window.__QS_SNAPSHOT__ || window.location.search || "";
   var iframe = document.getElementById('typebot-iframe');
-  iframe.src = baseUrl + params;
+  if (iframe) {
+    iframe.src = baseUrl + params;
+  }
 })();
 
