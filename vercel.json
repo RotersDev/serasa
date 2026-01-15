@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/check-status",
+      "destination": "/api/check-status.js"
+    },
+    {
+      "source": "/api/create-sale",
+      "destination": "/api/create-sale.js"
+    },
+    {
+      "source": "/public/:path*",
+      "destination": "/public/:path*"
+    },
+    {
+      "source": "/payments",
+      "destination": "/pages/payments.html"
+    },
+    {
+      "source": "/payments.html",
+      "destination": "/pages/payments.html"
+    },
+    {
+      "source": "/atendimento",
+      "destination": "/pages/atendimento.html"
+    },
+    {
+      "source": "/atendimento.html",
+      "destination": "/pages/atendimento.html"
+    },
+    {
+      "source": "/",
+      "destination": "/pages/atendimento.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/server.js"
+    }
+  ]
+}
+
