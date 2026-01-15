@@ -110,10 +110,10 @@ function handleRequest(req, res) {
   if (cleanPath.startsWith('/')) {
     cleanPath = cleanPath.substring(1);
   }
-
+  
   // Tentar diferentes caminhos base (para funcionar na Vercel e localmente)
   let normalizedPath = path.join(__dirname, cleanPath);
-
+  
   // Se não existir, tentar com process.cwd()
   if (!fs.existsSync(normalizedPath)) {
     const altPath = path.join(process.cwd(), cleanPath);
@@ -121,12 +121,26 @@ function handleRequest(req, res) {
       normalizedPath = altPath;
       console.log(`✅ Arquivo encontrado em: ${normalizedPath} (usando cwd)`);
     } else {
-      console.error(`❌ Arquivo não existe em: ${path.join(__dirname, cleanPath)} nem em: ${altPath}`);
+      // Na Vercel, tentar sem o diretório pages/ (arquivos podem estar na raiz)
+      const vercelPath = path.join(__dirname, path.basename(cleanPath));
+      if (fs.existsSync(vercelPath)) {
+        normalizedPath = vercelPath;
+        console.log(`✅ Arquivo encontrado em: ${normalizedPath} (Vercel root)`);
+      } else {
+        // Listar diretório para debug
+        try {
+          const dirContents = fs.readdirSync(__dirname);
+          console.error(`❌ Arquivo não existe. Conteúdo de __dirname (${__dirname}):`, dirContents);
+        } catch (e) {
+          console.error(`❌ Erro ao listar diretório: ${e.message}`);
+        }
+        console.error(`❌ Arquivo não existe em: ${path.join(__dirname, cleanPath)} nem em: ${altPath} nem em: ${vercelPath}`);
+      }
     }
   } else {
     console.log(`✅ Arquivo existe: ${normalizedPath}`);
   }
-
+  
   // Debug: log do caminho
   console.log(`Tentando acessar: ${urlPath} -> ${filePath} -> ${cleanPath} -> ${normalizedPath} (__dirname: ${__dirname}, cwd: ${process.cwd()})`);
 
